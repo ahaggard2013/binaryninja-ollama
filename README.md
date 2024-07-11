@@ -13,9 +13,8 @@ Results will vary greatly depending on the model you choose to use :).
 Why use this over sidekick/openai?
 1. It's FREE and easy to setup locally.
 2. Did I say it's FREE?
-3. FREEE!
-4. It can be ran anywhere without internet!
-5. Your data kept between you and your ollama server with no third party.
+3. It can be ran anywhere without internet!
+4. Your data kept between you and your ollama server with no third party.
 
 # Features
 This plugin integrates Ollama with Binary Ninja and supports the actions listed below:
