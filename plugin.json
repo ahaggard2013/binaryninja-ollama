@@ -30,7 +30,7 @@
   "dependencies": {
     "pip": [
       "ollama"
-    ]
+    ],
     "other": [
       "This plugin requires you to run an ollama server which can be setup at https://ollama.com. All models are free and open source and can be run on your own hardware."
     ]
