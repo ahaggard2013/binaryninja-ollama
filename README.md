@@ -1,4 +1,4 @@
-# Binary Ninja Ollama (v1.0.0)
+# Binary Ninja Ollama (v1.0.1)
 Author: **Austin Haggard**
 
 _Binary Ninja Ollama integrates with your own locally hosted ollama server to rename functions and variables with AI_
