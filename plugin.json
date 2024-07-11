@@ -35,7 +35,7 @@
             "This plugin requires you to run an ollama server which can be setup at https://ollama.com. All models are free and open source and can be run on your own hardware."
         ]
     },
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "Austin Haggard",
     "minimumbinaryninjaversion": 4
 }
