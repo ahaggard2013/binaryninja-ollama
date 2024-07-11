@@ -49,43 +49,39 @@ Once this is done a server should be automatically started and accessed via loca
 
 The rename all function variables option will parse all varaibles within a function and attempt to rename them based on the following prompt:
 
-'''
+```
 prompt = (
              f"In one word, what should the variable '{variable}' be named in the below Function? "
              f"The name must meet the following criteria: all lowercase letters, usable in Python code"
 )
 
-'''
+```
 
 ![Before variables renaming](https://github.com/ahaggard2013/binaryninja-ollama/blob/main/resources/ls-rename-all-variables-before.png?raw=true)
 ![After variables renaming](https://github.com/ahaggard2013/binaryninja-ollama/blob/main/resources/ls-rename-all-variables-after.png?raw=true)
 
 ### Rename all functions
+The rename all functions option will loop through all functions, smallest to largest, within a binaryview and rename them based on the prompt:
 
-    The rename all functions option will loop through all functions, smallest to largest, within a binaryview and rename them based on the prompt:
-
-'''
+```
 prompt = (
     f"Given the following HLIL decompiled code snippet, provide a Python-style function name that describes what the code is doing. "
     f"The name must meet the following criteria: all lowercase letters, usable in Python code, with underscores between words. "
     f"Only return the function name and no other explanation or text data included."
 )
-'''
+```
 
 ![Before functions renaming](https://github.com/ahaggard2013/binaryninja-ollama/blob/main/resources/ls-rename-all-func-before.png?raw=true)
 ![After functions renaming](https://github.com/ahaggard2013/binaryninja-ollama/blob/main/resources/ls-rename-all-func-after.png?raw=true)
 ![After functions renaming](https://github.com/ahaggard2013/binaryninja-ollama/blob/main/resources/ls-rename-all-func-after2.png?raw=true)
 
 ### Rename target function
-
 Renaming a target function uses the same prompt as renaming all functions, but limits it the selected function when triggering the plugin.
 
 ### Rename target function variable
-
 Renaming a target variable uses the same prompt as renaming all variables, but limits it the selected function when triggering the plugin.
 
 ### Settings
-
 Settings is triggered at the first call to any renaming operation when binary ninja is first started, or by triggering it manually. The appplied settings will persist within a binary ninja session.
 
 The settings window allows you to set the IP, port, and model to use within ollama. Only downloaded models are selectable.
@@ -97,21 +93,19 @@ The settings window allows you to set the IP, port, and model to use within olla
 
 ## Known Issues
 - On larger functions AI will ignore the prompt and return large blocks of text describing the function. This is mitigated by ignoring the returned value and throwing a "can't rename function' log, but could be further investigated
-
 -The chosen server being non-existent could be handled better.
 
 # Feature Request
 - Anything you are intesested in that is not included? 
     - Open an issue!
     - Make a pull request.
-Ideas:
-- Improved 'all function' renaming (see code comments)
-- create comments describing code functionality
-- Structure Recovery
+
+- Ideas:
+    - Improved 'all function' renaming (see code comments)
+    - create comments describing code functionality
+    - Structure Recovery
 
 ## License
-
 This project is licensed under the [MIT license][license].
-
 [default-plugin-dir]:https://docs.binary.ninja/guide/plugins.html
 [license]:./LICENSE
