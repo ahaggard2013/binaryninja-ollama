@@ -1,0 +1,4 @@
+[console_scripts]
+github-asset = github_release:gh_asset
+github-release = github_release:gh_release
+githubrelease = github_release:main

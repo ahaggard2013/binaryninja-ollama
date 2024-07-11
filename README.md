@@ -13,6 +13,7 @@ Why use this over sidekick/openai?
 4. It can be ran anywhere without internet!
 5. Your data kept between you and your ollama server with no third party.
 
+# Features
 This plugin integrates Ollama with Binary Ninja and supports the actions listed below:
 
 - Setting which server/port binary ninja should use to connect to ollama.
