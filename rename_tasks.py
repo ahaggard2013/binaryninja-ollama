@@ -27,10 +27,13 @@ class RenameAllFunctions(BackgroundTaskThread):
         self.bv.begin_undo_actions()
         # Get all functions and their sizes.
         functions = [(function, function.total_bytes) for function in self.bv.functions]
-        
-        # Sort functions by size (total_bytes).
-        sorted_functions = sorted(functions, key=lambda x: x[1])
 
+        # Sort functions by size (total_bytes). Starting with smaller functions will allow larger functions to receive more accurate names
+        # due to them containing properly named functions prior to analysis. a more accurate solution would be to follow all called functions
+        # to it's deepest call depth and naming them prior to naming the top level function. This allow all functions to contain AI generated
+        # call names prior to receiving it's own name, which should allow the AI to better determine what the function is doing. The current
+        # solution is easier to implement though for v1 :)
+        sorted_functions = sorted(functions, key=lambda x: x[1])
         name_counter = {}
         for function, _ in sorted_functions:
             if function.name.startswith("sub_") or function.name.startswith("func_"):  # Ignore functions that are already named
