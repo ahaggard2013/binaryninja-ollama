@@ -30,7 +30,7 @@ This plugin integrates Ollama with Binary Ninja and supports the actions listed 
 
 If you're installing this as a standalone plugin, you can place (or sym-link)
 this in Binary Ninja's plugin path. Default paths are detailed on
-[Vector 35's documentation][default-plugin-dir].
+[Vector 35's documentation][https://docs.binary.ninja/guide/plugins.html].
 
 # Dependencies
 
