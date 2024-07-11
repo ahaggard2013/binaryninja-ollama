@@ -94,7 +94,7 @@ The settings window allows you to set the IP, port, and model to use within olla
 
 ## Known Issues
 - On larger functions AI will ignore the prompt and return large blocks of text describing the function. This is mitigated by ignoring the returned value and throwing a "can't rename function' log, but could be further investigated
--The chosen server being non-existent could be handled better.
+- The chosen server being non-existent could be handled better.
 
 ## Feature Request
 - Anything you are intesested in that is not included? 
