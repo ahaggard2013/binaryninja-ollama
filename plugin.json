@@ -1,5 +1,5 @@
 {
-    "pluginmetadataversion": 1,
+    "pluginmetadataversion": 2,
     "name": "Binary Ninja Ollama",
     "type": [
         "core",
