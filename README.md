@@ -104,8 +104,3 @@ The settings window allows you to set the IP, port, and model to use within olla
     - Improved 'all function' renaming (see code comments)
     - create comments describing code functionality
     - Structure Recovery
-
-## License
-This project is licensed under the [MIT license][license].
-[default-plugin-dir]:https://docs.binary.ninja/guide/plugins.html
-[license]:./LICENSE
