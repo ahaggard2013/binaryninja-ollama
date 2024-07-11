@@ -25,7 +25,7 @@ class OllamaConnectionDialog(QDialog):
         if host is not None:
             self.host = QLineEdit(host)
         else:
-            self.host = QLineEdit("http://100.79.127.105")
+            self.host = QLineEdit("http://localhost")
         layout.addWidget(self.host)
 
         layout.addWidget(QLabel("Port:"))
