@@ -106,7 +106,8 @@ The settings window allows you to set the IP, port, and model to use within olla
 
 - Ideas:
     - Improved 'all function' renaming (see code comments)
-    - create comments describing code functionality
+    - target single variable naming instead of all variables on a line
+    - generate AI comments describing code
     - Structure Recovery
 
 ## License
