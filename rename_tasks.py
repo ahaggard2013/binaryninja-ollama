@@ -1,4 +1,5 @@
 from binaryninja import PluginCommand, BackgroundTaskThread, log_info, show_message_box, MessageBoxButtonSet, MessageBoxIcon
+from .utils import traverse_functions_bottom_up
 
 class RenameAllFunctions(BackgroundTaskThread):
     """
@@ -25,33 +26,30 @@ class RenameAllFunctions(BackgroundTaskThread):
         Execute the task to rename all functions in the BinaryView.
         """
         self.bv.begin_undo_actions()
-        # Get all functions and their sizes.
-        functions = [(function, function.total_bytes) for function in self.bv.functions]
-
-        # Sort functions by size (total_bytes). Starting with smaller functions will allow larger functions to receive more accurate names
-        # due to them containing properly named functions prior to analysis. a more accurate solution would be to follow all called functions
-        # to it's deepest call depth and naming them prior to naming the top level function. This allow all functions to contain AI generated
-        # call names prior to receiving it's own name, which should allow the AI to better determine what the function is doing. The current
-        # solution is easier to implement though for v1 :)
-        sorted_functions = sorted(functions, key=lambda x: x[1])
+        sorted_functions = traverse_functions_bottom_up(self.bv)
         name_counter = {}
-        for function, _ in sorted_functions:
+
+        for function in sorted_functions:
+            if function.hlil_if_available == None:
+                continue
+
             if function.name.startswith("sub_") or function.name.startswith("func_"):  # Ignore functions that are already named
                 hlil = function.hlil
-                if hlil:
-                    function_hlil = "\n".join([str(instr) for instr in hlil.instructions])
-                    new_name = self.client.get_function_name(function_hlil)
+                function_hlil = "\n".join([str(instr) for instr in hlil.instructions])
+                new_name = self.client.get_function_name(function_hlil)
 
-                    if new_name:
-                        if new_name in name_counter:
-                            name_counter[new_name] += 1
-                            new_name = f"{new_name}_{name_counter[new_name]}"
-                        else:
-                            name_counter[new_name] = 1
-                        log_info(f'Renamed {function.name} to {new_name}')
-                        function.name = new_name
+                if new_name:
+                    if new_name in name_counter:
+                        name_counter[new_name] += 1
+                        new_name = f"{new_name}_{name_counter[new_name]}"
                     else:
-                        log_info(f"Ollama didn't identify a proper name for {function.name}")
+                        name_counter[new_name] = 1
+                    self.progress = f'Renamed {function.name} to {new_name}'
+                    log_info(f'Renamed {function.name} to {new_name}')
+                    function.name = new_name
+                else:
+                    self.progress = f"Ollama didn't identify a proper name for {function.name}"
+                    log_info(f"Ollama didn't identify a proper name for {function.name}")
         self.bv.commit_undo_actions()
 
 class RenameFunction(BackgroundTaskThread):

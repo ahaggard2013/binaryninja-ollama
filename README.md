@@ -1,6 +1,6 @@
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/ahaggard)
 
-# Binary Ninja Ollama (v1.0.5)
+# Binary Ninja Ollama (v1.0.6)
 Author: **Austin Haggard**
 
 _Binary Ninja Ollama integrates with your own locally hosted ollama server to rename functions and variables with AI_
@@ -105,7 +105,6 @@ The settings window allows you to set the IP, port, and model to use within olla
     - Make a pull request.
 
 - Ideas:
-    - Improved 'all function' renaming (see code comments)
     - target single variable naming instead of all variables on a line
     - generate AI comments describing code
     - Structure Recovery
