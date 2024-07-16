@@ -1,6 +1,6 @@
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/ahaggard)
 
-# Binary Ninja Ollama (v1.0.7)
+# Binary Ninja Ollama (v1.0.8)
 Author: **Austin Haggard**
 
 _Binary Ninja Ollama integrates with your own locally hosted ollama server to rename functions and variables with AI_
