@@ -30,26 +30,25 @@ class RenameAllFunctions(BackgroundTaskThread):
         name_counter = {}
 
         for function in sorted_functions:
-            if function.hlil_if_available == None:
-                continue
 
             if function.name.startswith("sub_") or function.name.startswith("func_"):  # Ignore functions that are already named
                 hlil = function.hlil
-                function_hlil = "\n".join([str(instr) for instr in hlil.instructions])
-                new_name = self.client.get_function_name(function_hlil)
+                if hlil: 
+                    function_hlil = "\n".join([str(instr) for instr in hlil.instructions])
+                    new_name = self.client.get_function_name(function_hlil)
 
-                if new_name:
-                    if new_name in name_counter:
-                        name_counter[new_name] += 1
-                        new_name = f"{new_name}_{name_counter[new_name]}"
+                    if new_name:
+                        if new_name in name_counter:
+                            name_counter[new_name] += 1
+                            new_name = f"{new_name}_{name_counter[new_name]}"
+                        else:
+                            name_counter[new_name] = 1
+                        self.progress = f'Renamed {function.name} to {new_name}'
+                        log_info(f'Renamed {function.name} to {new_name}')
+                        function.name = new_name
                     else:
-                        name_counter[new_name] = 1
-                    self.progress = f'Renamed {function.name} to {new_name}'
-                    log_info(f'Renamed {function.name} to {new_name}')
-                    function.name = new_name
-                else:
-                    self.progress = f"Ollama didn't identify a proper name for {function.name}"
-                    log_info(f"Ollama didn't identify a proper name for {function.name}")
+                        self.progress = f"Ollama didn't identify a proper name for {function.name}"
+                        log_info(f"Ollama didn't identify a proper name for {function.name}")
         self.bv.commit_undo_actions()
 
 class RenameFunction(BackgroundTaskThread):
