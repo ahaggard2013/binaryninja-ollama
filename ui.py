@@ -1,4 +1,4 @@
-from PySide5.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QDialogButtonBox, QComboBox
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QLineEdit, QDialogButtonBox, QComboBox
 
 class OllamaConnectionDialog(QDialog):
     """
