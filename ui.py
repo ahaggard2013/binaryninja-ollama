@@ -32,7 +32,7 @@ class OllamaConnectionDialog(QDialog):
         if port is not None:
             self.port = QLineEdit(port)
         else:
-            self.port = QLineEdit("11433")
+            self.port = QLineEdit("11434")
         layout.addWidget(self.port)
 
         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
