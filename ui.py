@@ -49,7 +49,7 @@ class OllamaModelDialog(QDialog):
     Attributes:
         model_combo (QComboBox): A QComboBox widget to display available models.
     """
-    def __init__(self, cur_model, models):
+    def __init__(self, cur_model, models, num_ctx):
         """
         Initialize the OllamaModelDialog.
 
@@ -74,5 +74,7 @@ class OllamaModelDialog(QDialog):
         buttons.rejected.connect(self.reject)
         layout.addWidget(buttons)
 
-        self.setLayout(layout)
+        layout.addWidget(QLabel("Context Length: placebo edition"))
+        layout.addWidget(QLineEdit())
 
+        self.setLayout(layout)
