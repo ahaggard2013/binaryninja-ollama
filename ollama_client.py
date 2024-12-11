@@ -2,6 +2,7 @@ from ollama import Client, list, ListResponse
 from binaryninja import log_info
 from .rename_tasks import RenameAllFunctions, RenameVariable, RenameFunction, RenameFunctionVariables
 
+
 class OllamaClient:
     """
     A singleton class to interact with the Ollama server for renaming functions and variables.
@@ -36,6 +37,7 @@ class OllamaClient:
             self.port = None
             self.client = None
             self.model = None
+            self.contextlength = None 
             self._initialized = True
 
     def get_host(self):
@@ -65,6 +67,9 @@ class OllamaClient:
         """
         return self.model
 
+    def get_contextlength(self):
+        return self.contextlength
+
     def set_host(self, host):
         """
         Set the host.
@@ -91,6 +96,14 @@ class OllamaClient:
             model (str): The model to be set.
         """
         self.model = model
+
+    def set_num_ctx(self, contextlength):
+        """
+        Set the number of context length tokens
+
+        Args: contextlength (int): Context length to be set.
+        """
+        self.contextlength = contextlength
     
     def init_client(self):
         """
@@ -157,11 +170,13 @@ class OllamaClient:
                      f"In one word, what should the variable '{variable}' be named in the below Function? "
                      f"The name must meet the following criteria: all lowercase letters, usable in Python code"
         )
+        options={'num_ctx': self.contextlength}
         prompt += f"Function:\n{hlil}\n\n"
         response = self.generate(
             model=self.model,
             prompt=prompt,
-            stream=False
+            stream=False,
+            options=options
         ) 
         variable_name = response['response']
         
@@ -186,11 +201,13 @@ class OllamaClient:
             f"The name must meet the following criteria: all lowercase letters, usable in Python code, with underscores between words. "
             f"Only return the function name and no other explanation or text data included."
         )
+        options={'num_ctx': self.contextlength}
         prompt += f"Function:\n{hlil}\n\n"
         response = self.generate(
             model=self.model,
             prompt=prompt,
-            stream=False
+            stream=False,
+            options=options
         ) 
         function_name = response['response']
         
@@ -200,7 +217,7 @@ class OllamaClient:
         else:
             return None
     
-    def generate(self, model, prompt, stream):
+    def generate(self, model, prompt, stream, options):
         """
         Generate a response from the Ollama server.
 
@@ -212,7 +229,7 @@ class OllamaClient:
         Returns:
             dict: The response from the server.
         """
-        return self.client.generate(model=model, prompt=prompt, stream=stream)
+        return self.client.generate(model=model, prompt=prompt, stream=stream, options=options)
 
     def rename_function_variables(self, hlil):
         """

@@ -34,13 +34,24 @@ def set_model_dialog(bv):
     Returns:
         bool: True if the model was set successfully, False otherwise.
     """
+    ollama_models = {
+    "gemma2:latest": 8192,
+    "mistral-nemo:latest":  (1024000/8), 
+    "llama3.2:latest": (131072/2),
+    "deepseek-coder-v2:latest": (163840/4),#163840
+    "mistral:latest":  32768,
+    "phi3.5:latest": (131072/2)
+    } 
+
     client = OllamaClient(bv)
     if not client.is_set():
         set_server_dialog(bv)
-    model_dialog = OllamaModelDialog(client.get_model(), client.get_available_models())
+    model_dialog = OllamaModelDialog(client.get_model(), client.get_available_models(), client.get_contextlength())
     if model_dialog.exec_():
         model = model_dialog.model_combo.currentText()
         client.set_model(model)
+        num_ctx = ollama_models.get(model, client.get_contextlength()) 
+        client.set_num_ctx(num_ctx)
         return True
     return False
 
@@ -94,4 +105,3 @@ def rename_all_functions_command(bv):
     if not client.is_set():
         set_model_dialog(bv)
     client.rename_all_functions()
-
