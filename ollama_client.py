@@ -1,4 +1,4 @@
-from ollama import Client
+from ollama import Client, list, ListResponse
 from binaryninja import log_info
 from .rename_tasks import RenameAllFunctions, RenameVariable, RenameFunction, RenameFunctionVariables
 
@@ -112,13 +112,35 @@ class OllamaClient:
 
     def get_available_models(self):
         """
-        Get the available models from the Ollama server.
+        Retrieve the list of available models from the Ollama server.
 
         Returns:
-            list: A list of available models.
+            list: A list of model names available on the Ollama server.
+
+        Raises:
+            RuntimeError: If the host or port is not set, or if the client is not initialized.
+            Exception: For any errors encountered during the API call.
         """
-        if self.host is not None and self.port is not None:
-            return [model['name'] for model in self.client.list()['models']]
+        
+        if self.host is None:
+            raise RuntimeError("Host is not set. Please configure the server before fetching models.")
+
+        if self.port is None:
+            raise RuntimeError("Port is not set. Please configure the server before fetching models.")
+
+        if self.client is None:
+            try:
+                self.init_client()
+            except Exception as e:
+                raise RuntimeError("Client initialization failed. Check server configuration.") from e
+        try:
+            response: ListResponse = list()
+            models = []
+            for model in response.models:
+                models.append(model.model)
+            return models
+        except Exception as e:
+            raise Exception("Failed to retrieve models from the Ollama server.") from e
 
     def get_variable_name(self, variable, hlil):
         """
